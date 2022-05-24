@@ -1,0 +1,11 @@
+Pod::Spec.new do |s|
+s.name          = "$name"
+s.version       = "$version"
+s.summary       = "$summary"
+s.homepage      = "$homepage"
+s.license       = "$license"
+s.author        = { $authors }
+s.vendored_frameworks = '$frameworkName'
+s.source        = { :git => "$gitUrl", :tag => "#{s.version}" }
+s.exclude_files = "Classes/Exclude"
+end
