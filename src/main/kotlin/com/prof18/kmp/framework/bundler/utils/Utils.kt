@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-const val PLUGIN_TASKS_GROUP = "kmp-framework-bundler"
+internal const val PLUGIN_TASKS_GROUP = "kmp-framework-bundler"
 
 internal fun Framework.dsymFile(): File  {
     return File(outputFile.parent, "${name}.framework.dSYM")

@@ -36,7 +36,7 @@ abstract class KMPFrameworkBundlerExtension @Inject constructor(
         action.execute(cocoaPodRepoInfo)
     }
 
-    fun validateUserInput() {
+    internal fun validateUserInput() {
         if (!frameworkName.isPresent) {
             throw InvalidUserDataException(ErrorMessages.FRAMEWORK_NAME_NOT_PRESENT_MESSAGE)
         }

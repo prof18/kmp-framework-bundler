@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:0.4.0")
+        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:0.10.0")
     }
 }
 
@@ -59,7 +59,7 @@ tasks.test {
 }
 
 tasks.processResources {
-    duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 gradlePlugin {
