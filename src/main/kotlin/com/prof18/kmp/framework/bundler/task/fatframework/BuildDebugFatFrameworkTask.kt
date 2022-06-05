@@ -15,11 +15,11 @@ internal fun Project.registerBuildDebugFatFrameworkTask(
         group = PLUGIN_TASKS_GROUP
         description = "Create a Debug Fat Framework"
 
-        for (framework in config.debugFatFrameworkList) {
+        for (framework in config.debugFrameworkList) {
             dependsOn(framework.linkTaskName)
         }
         baseName = config.frameworkName.get()
-        from(config.debugFatFrameworkList)
+        from(config.debugFrameworkList)
         destinationDir = File(config.outputPath.get())
     }
 }

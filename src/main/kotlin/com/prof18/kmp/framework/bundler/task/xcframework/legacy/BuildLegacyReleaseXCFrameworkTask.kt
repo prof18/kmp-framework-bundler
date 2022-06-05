@@ -13,6 +13,6 @@ internal fun Project.registerBuildLegacyReleaseXCFrameworkTask(
         group = PLUGIN_TASKS_GROUP
         description = "Create a Release XCFramework"
 
-        buildXCFramework(config, config.releaseFatFrameworkList)
+        buildXCFramework(config, config.releaseFrameworkList)
     }
 }

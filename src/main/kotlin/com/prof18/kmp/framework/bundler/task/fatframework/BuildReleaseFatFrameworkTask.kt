@@ -15,11 +15,11 @@ internal fun Project.registerBuildReleaseFatFrameworkTask(
         group = PLUGIN_TASKS_GROUP
         description = "Create a Release Fat Framework"
 
-        for (framework in config.releaseFatFrameworkList) {
+        for (framework in config.releaseFrameworkList) {
             dependsOn(framework.linkTaskName)
         }
         baseName = config.frameworkName.get()
-        from(config.releaseFatFrameworkList)
+        from(config.releaseFrameworkList)
         destinationDir = File(config.outputPath.get())
     }
 }

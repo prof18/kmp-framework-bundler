@@ -12,15 +12,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 internal fun Project.publishReleaseFramework(config: PluginConfig) {
-    if (config.frameworkType == FrameworkType.XC_FRAMEWORK) {
-        val frameworkLocation = config.getXCFrameworkDebugBuildTask().outputDir
-        val release = "${frameworkLocation.absolutePath}/release"
-        copy {
-            from(release)
-            into(config.outputPath.get())
-        }
-    }
-
     val podSpecFile = config.getPodSpecFile()
     if (!podSpecFile.exists()) {
         throw ExecException("podspec file does not exists!")

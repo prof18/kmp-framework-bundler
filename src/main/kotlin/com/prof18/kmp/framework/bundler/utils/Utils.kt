@@ -8,8 +8,8 @@ import java.io.File
 
 internal const val PLUGIN_TASKS_GROUP = "kmp-framework-bundler"
 
-internal fun Framework.dsymFile(): File  {
-    return File(outputFile.parent, "${name}.framework.dSYM")
+internal fun Framework.dsymFile(frameworkName: String): File {
+    return File(outputFile.parent, "$frameworkName.framework.dSYM")
 }
 
 internal fun Project.executeBashCommand(showOutput: Boolean = true, workingDirPath: String, commandList: List<String>): String {

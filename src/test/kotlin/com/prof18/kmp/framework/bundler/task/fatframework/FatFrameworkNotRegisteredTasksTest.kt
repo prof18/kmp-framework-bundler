@@ -4,7 +4,7 @@ import com.prof18.kmp.framework.bundler.task.xcframework.BUILD_DEBUG_XC_FRAMEWOR
 import com.prof18.kmp.framework.bundler.task.xcframework.BUILD_RELEASE_XC_FRAMEWORK_TASK_NAME
 import com.prof18.kmp.framework.bundler.task.xcframework.PublishDebugXCFrameworkTask
 import com.prof18.kmp.framework.bundler.task.xcframework.PublishReleaseXCFrameworkTask
-import com.prof18.kmp.framework.bundler.testutils.TestUtils
+import com.prof18.kmp.framework.bundler.testutils.baseFatFrameworkGradleFile
 import junit.framework.TestCase.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
@@ -41,7 +41,7 @@ class FatFrameworkNotRegisteredTasksTest(
            }     
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.baseGradleFile)
+        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())

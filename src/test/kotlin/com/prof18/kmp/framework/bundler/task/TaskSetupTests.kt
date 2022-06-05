@@ -1,7 +1,8 @@
 package com.prof18.kmp.framework.bundler.task
 
 import com.prof18.kmp.framework.bundler.data.ErrorMessages
-import com.prof18.kmp.framework.bundler.testutils.TestUtils
+import com.prof18.kmp.framework.bundler.testutils.baseFatFrameworkGradleFile
+import com.prof18.kmp.framework.bundler.testutils.baseXCFrameworkGradleFile
 import junit.framework.TestCase.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
@@ -38,7 +39,7 @@ class TaskSetupTests {
            }
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.baseGradleFile)
+        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())
@@ -61,7 +62,7 @@ class TaskSetupTests {
            }
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.baseGradleFile)
+        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())
@@ -85,7 +86,7 @@ class TaskSetupTests {
            }
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.baseGradleFile)
+        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())
@@ -110,7 +111,7 @@ class TaskSetupTests {
            }     
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.xcFrameworkGradleFile)
+        gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())
@@ -135,7 +136,7 @@ class TaskSetupTests {
            }     
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.baseGradleFile)
+        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())
@@ -167,7 +168,7 @@ class TaskSetupTests {
            }     
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.xcFrameworkGradleFile)
+        gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())

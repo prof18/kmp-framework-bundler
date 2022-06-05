@@ -13,6 +13,6 @@ internal fun Project.registerBuildLegacyDebugXCFrameworkTask(
         group = PLUGIN_TASKS_GROUP
         description = "Create a Debug XCFramework"
 
-        buildXCFramework(config, config.debugFatFrameworkList)
+        buildXCFramework(config, config.debugFrameworkList)
     }
 }

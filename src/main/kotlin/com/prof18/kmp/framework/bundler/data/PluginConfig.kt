@@ -10,8 +10,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFrameworkTask
 import java.io.File
 
 internal class PluginConfig private constructor(
-    val debugFatFrameworkList: List<Framework>,
-    val releaseFatFrameworkList: List<Framework>,
+    val debugFrameworkList: List<Framework>,
+    val releaseFrameworkList: List<Framework>,
     val frameworkName: Property<String>,
     val outputPath: Property<String>,
     val versionName: Property<String>,
@@ -39,8 +39,8 @@ internal class PluginConfig private constructor(
     internal companion object {
         fun of(extension: KMPFrameworkBundlerExtension): PluginConfig {
             return PluginConfig(
-                debugFatFrameworkList = extension.debugFrameworkList,
-                releaseFatFrameworkList = extension.releaseFrameworkList,
+                debugFrameworkList = extension.debugFrameworkList,
+                releaseFrameworkList = extension.releaseFrameworkList,
                 frameworkName = extension.frameworkName,
                 outputPath = extension.outputPath,
                 versionName = extension.versionName,

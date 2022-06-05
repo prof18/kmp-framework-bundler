@@ -4,7 +4,7 @@ import com.prof18.kmp.framework.bundler.task.fatframework.BUILD_DEBUG_FAT_FRAMEW
 import com.prof18.kmp.framework.bundler.task.fatframework.BUILD_RELEASE_FAT_FRAMEWORK_TASK_NAME
 import com.prof18.kmp.framework.bundler.task.fatframework.PublishDebugFatFrameworkTask
 import com.prof18.kmp.framework.bundler.task.fatframework.PublishReleaseFatFrameworkTask
-import com.prof18.kmp.framework.bundler.testutils.TestUtils
+import com.prof18.kmp.framework.bundler.testutils.baseXCFrameworkGradleFile
 import junit.framework.TestCase.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
@@ -50,7 +50,7 @@ class XCFrameworkNotRegisteredTasksTest(
            }     
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.xcFrameworkGradleFile)
+        gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())
@@ -77,7 +77,7 @@ class XCFrameworkNotRegisteredTasksTest(
            }     
        """.trimIndent()
 
-        gradleFileStringBuilder.append(TestUtils.xcFrameworkGradleFile)
+        gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.writeText(gradleFileStringBuilder.toString())

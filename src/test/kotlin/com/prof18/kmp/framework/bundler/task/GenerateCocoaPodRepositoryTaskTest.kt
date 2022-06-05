@@ -1,7 +1,7 @@
 package com.prof18.kmp.framework.bundler.task
 
 import com.prof18.kmp.framework.bundler.data.ErrorMessages
-import com.prof18.kmp.framework.bundler.testutils.TestUtils
+import com.prof18.kmp.framework.bundler.testutils.baseFatFrameworkGradleFile
 import junit.framework.TestCase.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
@@ -22,7 +22,7 @@ class GenerateCocoaPodTaskWithoutFieldsTest {
         buildGradleFile = File("src/test/resources/$testProjectName/build.gradle.kts")
 
         gradleFileStringBuilder = StringBuilder()
-        gradleFileStringBuilder.append(TestUtils.baseGradleFile)
+        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
     }
 
     @After

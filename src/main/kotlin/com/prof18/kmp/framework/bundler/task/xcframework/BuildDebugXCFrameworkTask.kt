@@ -15,5 +15,14 @@ internal fun Project.registerBuildDebugXCFrameworkTask(
 
         val debugBuildTask = config.getXCFrameworkDebugBuildTask()
         dependsOn(debugBuildTask.name)
+
+        doLast {
+            val frameworkLocation = config.getXCFrameworkDebugBuildTask().outputDir
+            val debugPath = "${frameworkLocation.absolutePath}/debug"
+            copy {
+                from(debugPath)
+                into(config.outputPath.get())
+            }
+        }
     }
 }
