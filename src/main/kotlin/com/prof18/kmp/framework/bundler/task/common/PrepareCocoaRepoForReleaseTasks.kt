@@ -40,7 +40,7 @@ internal abstract class PrepareCocoaRepoForReleaseTasks @Inject constructor(
         project.execBashCommandInRepoAndThrowExecException(
             commandList = listOf("git", "checkout", branchName),
             workingDirPath = config.outputPath.get(),
-            exceptionMessage = "Error while checking out to the $branchName branch. Are you it does exists?"
+            exceptionMessage = "Error while checking out to the $branchName branch. Are you sure it does exists?"
         )
     }
 

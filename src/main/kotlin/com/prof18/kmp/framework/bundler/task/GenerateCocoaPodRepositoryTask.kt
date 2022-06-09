@@ -72,6 +72,12 @@ internal abstract class GenerateCocoaPodRepositoryTask @Inject constructor(
 
         project.execBashCommandThrowExecException(
             output = parentFile,
+            commandList = listOf("git", "branch", "-m", "main"),
+            exceptionMessage = "Unable to rename to main branch"
+        )
+
+        project.execBashCommandThrowExecException(
+            output = parentFile,
             commandList = listOf("git", "add", "."),
             exceptionMessage = "Unable to add changes on main"
         )

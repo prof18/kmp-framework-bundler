@@ -1,11 +1,11 @@
 package com.prof18.kmp.framework.bundler.task.xcframework
 
 import com.prof18.kmp.framework.bundler.data.FrameworkType
-import com.prof18.kmp.framework.bundler.testutils.BaseTaskTest
+import com.prof18.kmp.framework.bundler.testutils.BaseBuildTaskTest
 import junit.framework.TestCase
 import org.junit.Test
 
-class XCFrameworkLegacyTasksTest : BaseTaskTest(frameworkType = FrameworkType.XC_FRAMEWORK_LEGACY_BUILD) {
+class XCFrameworkLegacyTasksBuildTest : BaseBuildTaskTest(frameworkType = FrameworkType.XC_FRAMEWORK_LEGACY_BUILD) {
 
     @Test
     fun `When running the legacy build debug xcFramework task, the xcFramework is placed inside the correct destination folder`() {

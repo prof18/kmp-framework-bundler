@@ -23,7 +23,7 @@ internal fun Exec.buildXCFramework(config: PluginConfig, frameworks: List<Framew
             add("-framework")
             add(framework.outputFile.path)
 
-            framework.dsymFile().takeIf { it.exists() }?.let { dsymFile ->
+            framework.dsymFile(config.frameworkName.get()).takeIf { it.exists() }?.let { dsymFile ->
                 add("-debug-symbols")
                 add(dsymFile.path)
             }

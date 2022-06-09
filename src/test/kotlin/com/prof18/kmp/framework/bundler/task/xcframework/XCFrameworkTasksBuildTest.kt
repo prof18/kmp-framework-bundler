@@ -1,11 +1,11 @@
 package com.prof18.kmp.framework.bundler.task.xcframework
 
 import com.prof18.kmp.framework.bundler.data.FrameworkType
-import com.prof18.kmp.framework.bundler.testutils.BaseTaskTest
+import com.prof18.kmp.framework.bundler.testutils.BaseBuildTaskTest
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 
-class XCFrameworkTasksTest: BaseTaskTest(frameworkType = FrameworkType.XC_FRAMEWORK) {
+class XCFrameworkTasksBuildTest: BaseBuildTaskTest(frameworkType = FrameworkType.XC_FRAMEWORK) {
 
     @Test
     fun `When running the build debug xcFramework task, the xcFramework is placed inside the correct destination folder`() {

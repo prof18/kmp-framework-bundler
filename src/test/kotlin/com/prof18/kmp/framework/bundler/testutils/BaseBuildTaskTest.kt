@@ -5,8 +5,9 @@ import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
 import org.junit.Before
 import java.io.File
+import java.nio.file.Paths
 
-abstract class BaseTaskTest(
+abstract class BaseBuildTaskTest(
     private val frameworkType: FrameworkType,
 ) {
 
@@ -19,7 +20,10 @@ abstract class BaseTaskTest(
     fun setup() {
         testProject = File("src/test/resources/test-project")
         buildGradleFile = File("src/test/resources/test-project/build.gradle.kts")
-        testDestFile = File("src/test/resources/test-dest")
+
+        val currentPath = Paths.get("").toAbsolutePath().toString()
+        testDestFile = File("$currentPath/../test-dest")
+        testDestFile.mkdirs()
 
         buildGradleFile.writeText(getGradleFile())
 
@@ -31,7 +35,7 @@ abstract class BaseTaskTest(
     @After
     fun cleanUp() {
         buildGradleFile.deleteRecursively()
-        testDestFile.listFiles().forEach { it.deleteRecursively() }
+        testDestFile.deleteRecursively()
         File("${testProject.path}/build").deleteRecursively()
         File("${testProject.path}/.gradle").deleteRecursively()
     }

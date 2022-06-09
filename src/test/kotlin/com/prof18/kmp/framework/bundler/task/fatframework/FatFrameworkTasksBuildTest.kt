@@ -1,11 +1,11 @@
 package com.prof18.kmp.framework.bundler.task.fatframework
 
 import com.prof18.kmp.framework.bundler.data.FrameworkType
-import com.prof18.kmp.framework.bundler.testutils.BaseTaskTest
+import com.prof18.kmp.framework.bundler.testutils.BaseBuildTaskTest
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 
-internal class FatFrameworkTasksTest : BaseTaskTest(frameworkType = FrameworkType.FAT_FRAMEWORK) {
+internal class FatFrameworkTasksBuildTest : BaseBuildTaskTest(frameworkType = FrameworkType.FAT_FRAMEWORK) {
 
     @Test
     fun `When running the build debug fat framework task, the fat framework and debug symbols are placed inside the correct destination folder`() {
@@ -27,8 +27,5 @@ internal class FatFrameworkTasksTest : BaseTaskTest(frameworkType = FrameworkTyp
         assertTrue(testDestFile.listFiles().any { it.name == "LibraryName.framework.dSYM" })
     }
 
-    // TODO: PublishDebugFatFrameworkTask.NAME
-
-    // TODO: PublishReleaseFatFrameworkTask.NAME
 
 }
