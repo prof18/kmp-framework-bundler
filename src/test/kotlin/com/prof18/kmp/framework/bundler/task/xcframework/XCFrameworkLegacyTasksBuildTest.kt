@@ -13,7 +13,7 @@ class XCFrameworkLegacyTasksBuildTest : BaseBuildTaskTest(frameworkType = Framew
             .withArguments(BUILD_DEBUG_XC_FRAMEWORK_TASK_NAME)
             .build()
 
-        TestCase.assertTrue(testDestFile.listFiles().any { it.name == "LibraryName.xcframework" })
+        TestCase.assertTrue(testDestFile.listFiles()?.any { it.name == "LibraryName.xcframework" } ?: false)
     }
 
     @Test
@@ -22,6 +22,6 @@ class XCFrameworkLegacyTasksBuildTest : BaseBuildTaskTest(frameworkType = Framew
             .withArguments(BUILD_RELEASE_XC_FRAMEWORK_TASK_NAME)
             .build()
 
-        TestCase.assertTrue(testDestFile.listFiles().any { it.name == "LibraryName.xcframework" })
+        TestCase.assertTrue(testDestFile.listFiles()?.any { it.name == "LibraryName.xcframework" } ?: false)
     }
 }

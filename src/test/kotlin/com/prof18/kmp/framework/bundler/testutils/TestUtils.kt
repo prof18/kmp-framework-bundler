@@ -5,15 +5,13 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
-private const val KOTLIN_VERSION = "1.6.20"
-
 const val FRAMEWORK_VERSION_NUMBER = "1.0.0"
 
 const val POD_SPEC_VERSION_NUMBER = "s.version       = \"$FRAMEWORK_VERSION_NUMBER\""
 
 val baseFatFrameworkGradleFile = """
         plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
+            kotlin("multiplatform") 
             id("com.prof18.kmp.framework.bundler")
         }
 
@@ -36,7 +34,7 @@ val baseXCFrameworkGradleFile = """
         import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
         plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
+            kotlin("multiplatform") 
             id("com.prof18.kmp.framework.bundler")
         }
 
@@ -61,7 +59,7 @@ val baseXCFrameworkGradleFile = """
 
 val fatFrameworkGradleFile = """
         plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
+            kotlin("multiplatform") 
             id("com.prof18.kmp.framework.bundler")
         }
 
@@ -92,7 +90,7 @@ val xcFrameworkGradleFile = """
         import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
         plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
+            kotlin("multiplatform") 
             id("com.prof18.kmp.framework.bundler")
         }
 
@@ -124,7 +122,7 @@ val xcFrameworkGradleFile = """
 
 val legacyXCFrameworkGradleFile = """
         plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
+            kotlin("multiplatform") 
             id("com.prof18.kmp.framework.bundler")
         }
 
