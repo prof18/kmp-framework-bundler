@@ -21,6 +21,7 @@ class FatFrameworkNotRegisteredTasksTest(
 
     private lateinit var testProject: File
     private lateinit var buildGradleFile: File
+    private lateinit var tempBuildGradleFile: File
     private lateinit var gradleFileStringBuilder: StringBuilder
     private lateinit var runner: GradleRunner
 
@@ -29,6 +30,8 @@ class FatFrameworkNotRegisteredTasksTest(
         val testProjectName = "test-project"
         testProject = File("src/test/resources/$testProjectName")
         buildGradleFile = File("src/test/resources/$testProjectName/build.gradle.kts")
+        tempBuildGradleFile = File("src/test/resources/$testProjectName/build.gradle.kts.new")
+        buildGradleFile.copyTo(tempBuildGradleFile)
 
         gradleFileStringBuilder = StringBuilder()
 
@@ -44,7 +47,7 @@ class FatFrameworkNotRegisteredTasksTest(
         gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.writeText(gradleFileStringBuilder.toString())
+        buildGradleFile.appendText(gradleFileStringBuilder.toString())
 
         runner = GradleRunner.create()
             .withProjectDir(testProject)
@@ -54,6 +57,7 @@ class FatFrameworkNotRegisteredTasksTest(
     @After
     fun cleanUp() {
         buildGradleFile.deleteRecursively()
+        tempBuildGradleFile.renameTo(buildGradleFile)
         File("${testProject.path}/build").deleteRecursively()
         File("${testProject.path}/.gradle").deleteRecursively()
     }

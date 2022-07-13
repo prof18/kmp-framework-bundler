@@ -1,26 +1,19 @@
 package com.prof18.kmp.framework.bundler.testutils
 
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
-private const val KOTLIN_VERSION = "1.6.20"
+private const val KOTLIN_VERSION = "1.5.0"
 
 const val FRAMEWORK_VERSION_NUMBER = "1.0.0"
 
 const val POD_SPEC_VERSION_NUMBER = "s.version       = \"$FRAMEWORK_VERSION_NUMBER\""
 
 val baseFatFrameworkGradleFile = """
-        plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
-            id("com.prof18.kmp.framework.bundler")
-        }
-
-        repositories {
-            mavenCentral()
-        }
-
         kotlin {
             ios() {
                 binaries.framework("FrameworkName")
@@ -88,18 +81,7 @@ val fatFrameworkGradleFile = """
        }  
     """.trimIndent()
 
-val xcFrameworkGradleFile = """
-        import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-
-        plugins {
-            kotlin("multiplatform") version "$KOTLIN_VERSION"
-            id("com.prof18.kmp.framework.bundler")
-        }
-
-        repositories {
-            mavenCentral()
-        }
-
+val xcFrameworkGradleFile = """        
         kotlin {
             val xcFramework = XCFramework("LibraryName")
 
@@ -204,3 +186,15 @@ fun File.getPlainText(): String {
     val bufferedReader: BufferedReader = this.bufferedReader()
     return bufferedReader.use { it.readText() }
 }
+
+fun File.gradlew(vararg commands: String): BuildResult = GradleRunner.create()
+    .withProjectDir(this)
+    .withArguments(*commands, "--stacktrace")
+    .forwardOutput()
+    .build()
+
+fun File.buildAndFail(vararg commands: String): BuildResult = GradleRunner.create()
+    .withProjectDir(this)
+    .withArguments(*commands, "--stacktrace")
+    .forwardOutput()
+    .build()

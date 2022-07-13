@@ -18,10 +18,12 @@ plugins {
     signing
 }
 
-val versionName = "0.0.1-SNAPSHOT"
+val kotlinVersion: String by project
+val pluginVersion: String by project
+
 val group = "com.prof18.kmp.framework.bundler"
 
-version = versionName
+version = pluginVersion
 
 repositories {
     mavenCentral()
@@ -39,16 +41,17 @@ tasks.pluginUnderTestMetadata {
 dependencies {
     compileOnly(gradleApi())
 
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.6.20")
+    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlinVersion")
 
     testImplementation("junit:junit:4.13.2")
     fixtureClasspath(kotlin("gradle-plugin"))
+
 }
 
 java {// TODO: sure about this?
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+//    sourceCompatibility = JavaVersion.VERSION_1_8
+//    targetCompatibility = JavaVersion.VERSION_1_8
 
     withJavadocJar()
     withSourcesJar()
@@ -62,12 +65,17 @@ tasks.processResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
+tasks.withType<Test> {
+    systemProperty("kotlinVersion", kotlinVersion)
+    systemProperty("pluginVersion", pluginVersion)
+}
+
 gradlePlugin {
     plugins {
         create("frameworkBundler") {
             id = group
             implementationClass = "com.prof18.kmp.framework.bundler.KMPFrameworkBundlerPlugin"
-            version = versionName
+            version = pluginVersion
         }
     }
 }

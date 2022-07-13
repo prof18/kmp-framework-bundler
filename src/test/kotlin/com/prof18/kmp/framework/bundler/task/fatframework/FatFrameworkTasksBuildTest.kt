@@ -13,7 +13,7 @@ internal class FatFrameworkTasksBuildTest : BaseBuildTaskTest(frameworkType = Fr
             .withArguments(BUILD_DEBUG_FAT_FRAMEWORK_TASK_NAME)
             .build()
 
-        assertTrue(testDestFile.listFiles().any { it.name == "LibraryName.framework" })
+        assertTrue(testDestFile.listFiles()?.any { it.name == "LibraryName.framework" } ?: false)
         assertTrue(testDestFile.listFiles().any { it.name == "LibraryName.framework.dSYM" })
     }
 
