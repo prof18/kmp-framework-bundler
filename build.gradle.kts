@@ -29,15 +29,6 @@ repositories {
     mavenCentral()
 }
 
-val fixtureClasspath by configurations.creating
-
-// Append any extra dependencies to the test fixtures via a custom configuration classpath. This
-// allows us to apply additional plugins in a fixture while still leveraging dependency resolution
-// and de-duplication semantics.
-tasks.pluginUnderTestMetadata {
-    pluginClasspath.from(fixtureClasspath)
-}
-
 dependencies {
     compileOnly(gradleApi())
 
@@ -45,8 +36,6 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlinVersion")
 
     testImplementation("junit:junit:4.13.2")
-    fixtureClasspath(kotlin("gradle-plugin"))
-
 }
 
 java {
