@@ -4,6 +4,7 @@ import com.prof18.kmp.framework.bundler.data.FrameworkType
 import com.prof18.kmp.framework.bundler.testutils.BasePublishTest
 import com.prof18.kmp.framework.bundler.testutils.FRAMEWORK_VERSION_NUMBER
 import com.prof18.kmp.framework.bundler.testutils.POD_SPEC_VERSION_NUMBER
+import com.prof18.kmp.framework.bundler.testutils.buildAndRun
 import com.prof18.kmp.framework.bundler.testutils.getPlainText
 import com.prof18.kmp.framework.bundler.testutils.runBashCommandAndGetOutput
 import org.junit.Assert.assertTrue
@@ -13,9 +14,7 @@ class XCFrameworkLegacyTasksPublishTests : BasePublishTest(frameworkType = Frame
 
     @Test
     fun `When running the publish debug fat framework task, in the destination, the version number is updated in the pod spec, the branch is develop and the commit message is correct`() {
-        runner
-            .withArguments(PublishDebugXCFrameworkTask.NAME)
-            .build()
+        testProject.buildAndRun(PublishDebugXCFrameworkTask.NAME)
 
         // version on pod spec
         assertTrue(podSpecFile.getPlainText().contains(POD_SPEC_VERSION_NUMBER))
@@ -31,9 +30,7 @@ class XCFrameworkLegacyTasksPublishTests : BasePublishTest(frameworkType = Frame
 
     @Test
     fun `When running the publish release fat framework task, in the destination, the version number is updated in the pod spec, the branch is main, the commit message and the git tag are correct`() {
-        runner
-            .withArguments(PublishReleaseXCFrameworkTask.NAME)
-            .build()
+        testProject.buildAndRun(PublishReleaseXCFrameworkTask.NAME)
 
         // version on pod spec
         assertTrue(podSpecFile.getPlainText().contains(POD_SPEC_VERSION_NUMBER))

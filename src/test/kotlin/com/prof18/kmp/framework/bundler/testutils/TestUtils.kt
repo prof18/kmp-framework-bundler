@@ -53,15 +53,6 @@ val baseXCFrameworkGradleFile = """
     """.trimIndent()
 
 val fatFrameworkGradleFile = """
-        plugins {
-            kotlin("multiplatform") 
-            id("com.prof18.kmp.framework.bundler")
-        }
-
-        repositories {
-            mavenCentral()
-        }
-
         kotlin {
             ios() {
                 binaries.framework("FrameworkName")
@@ -105,15 +96,6 @@ val xcFrameworkGradleFile = """
     """.trimIndent()
 
 val legacyXCFrameworkGradleFile = """
-        plugins {
-            kotlin("multiplatform") 
-            id("com.prof18.kmp.framework.bundler")
-        }
-
-        repositories {
-            mavenCentral()
-        }
-
         kotlin {
             ios() {
                 binaries.framework("LibraryName") 
@@ -187,7 +169,7 @@ fun File.getPlainText(): String {
     return bufferedReader.use { it.readText() }
 }
 
-fun File.gradlew(vararg commands: String): BuildResult = GradleRunner.create()
+fun File.buildAndRun(vararg commands: String): BuildResult = GradleRunner.create()
     .withProjectDir(this)
     .withArguments(*commands, "--stacktrace")
     .forwardOutput()
@@ -197,4 +179,18 @@ fun File.buildAndFail(vararg commands: String): BuildResult = GradleRunner.creat
     .withProjectDir(this)
     .withArguments(*commands, "--stacktrace")
     .forwardOutput()
-    .build()
+    .buildAndFail()
+
+fun extractKotlinVersion(version: String): KotlinVersion? {
+    val split = version
+        .substringBefore("-")
+        .split(".")
+    val major = split.firstOrNull()?.toIntOrNull() ?: return null
+    val minor = split.getOrNull(1)?.toIntOrNull() ?: return null
+    val patch = split.getOrNull(2)?.toIntOrNull() ?: return null
+    return KotlinVersion(major, minor, patch)
+}
+
+fun getKotlinVersion(): String = System.getProperty("kotlinVersion")
+
+fun KotlinVersion.hasDefaultXCFrameworkSupport() = this.isAtLeast(1, 5, 30)

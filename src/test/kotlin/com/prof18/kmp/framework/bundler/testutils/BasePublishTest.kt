@@ -11,17 +11,22 @@ abstract class BasePublishTest(
     private val frameworkType: FrameworkType,
 ) {
 
-    private lateinit var testProject: File
-    private lateinit var buildGradleFile: File
     lateinit var testDestFolder: File
-    private lateinit var remoteDestFolder: File
     lateinit var podSpecFile: File
-    lateinit var runner: GradleRunner
+    lateinit var testProject: File
 
+    private lateinit var buildGradleFile: File
+    private lateinit var remoteDestFolder: File
+    private lateinit var tempBuildGradleFile: File
+
+    // TODO: delete!
+    lateinit var runner: GradleRunner
     @Before
     fun setup() {
         testProject = File("src/test/resources/test-project")
         buildGradleFile = File("src/test/resources/test-project/build.gradle.kts")
+        tempBuildGradleFile = File("src/test/resources/test-project/build.gradle.kts.new")
+        buildGradleFile.copyTo(tempBuildGradleFile)
 
         val currentPath = Paths.get("").toAbsolutePath().toString()
         testDestFolder = File("$currentPath/../test-dest")
@@ -30,7 +35,7 @@ abstract class BasePublishTest(
         remoteDestFolder = File("$currentPath/../remote-dest")
         remoteDestFolder.mkdirs()
 
-        buildGradleFile.writeText(getGradleFile())
+        buildGradleFile.appendText(getGradleFile())
 
         testDestFolder.runBashCommand("git", "init")
         testDestFolder.runBashCommand("git", "branch", "-m", "main")
@@ -47,19 +52,16 @@ abstract class BasePublishTest(
         testDestFolder.runBashCommand("git", "push", "origin", "--all")
 
         testDestFolder.runBashCommand("git", "checkout", "-b", "develop")
-
-        runner = GradleRunner.create()
-            .withProjectDir(testProject)
-            .withPluginClasspath()
     }
 
     @After
     fun cleanUp() {
         buildGradleFile.deleteRecursively()
+        tempBuildGradleFile.renameTo(buildGradleFile)
         testDestFolder.deleteRecursively()
         remoteDestFolder.deleteRecursively()
         File("${testProject.path}/build").deleteRecursively()
-        File("${testProject.path}/.gradle").deleteRecursively()
+//        File("${testProject.path}/.gradle").deleteRecursively()
     }
 
     private fun getGradleFile(): String = when (frameworkType) {

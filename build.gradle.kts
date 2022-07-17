@@ -50,8 +50,8 @@ dependencies {
 }
 
 java {
-//    sourceCompatibility = JavaVersion.VERSION_1_8
-//    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     withJavadocJar()
     withSourcesJar()
@@ -59,16 +59,14 @@ java {
 
 tasks.withType<Test> {
     useJUnit()
-    dependsOn("publishToMavenLocal") // TODO: use it or not?
+    dependsOn("publishToMavenLocal")
+
+    systemProperty("kotlinVersion", kotlinVersion)
+    systemProperty("pluginVersion", pluginVersion)
 }
 
 tasks.processResources {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-tasks.withType<Test> {
-    systemProperty("kotlinVersion", kotlinVersion)
-    systemProperty("pluginVersion", pluginVersion)
 }
 
 gradlePlugin {

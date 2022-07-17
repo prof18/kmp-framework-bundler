@@ -2,6 +2,7 @@ package com.prof18.kmp.framework.bundler.task
 
 import com.prof18.kmp.framework.bundler.data.ErrorMessages
 import com.prof18.kmp.framework.bundler.testutils.baseFatFrameworkGradleFile
+import com.prof18.kmp.framework.bundler.testutils.buildAndFail
 import junit.framework.TestCase.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
@@ -14,12 +15,14 @@ class GenerateCocoaPodTaskWithoutFieldsTest {
     private lateinit var testProject: File
     private lateinit var buildGradleFile: File
     private lateinit var gradleFileStringBuilder: StringBuilder
+    private lateinit var tempBuildGradleFile: File
 
     @Before
     fun setup() {
-        val testProjectName = "test-project"
-        testProject = File("src/test/resources/$testProjectName")
-        buildGradleFile = File("src/test/resources/$testProjectName/build.gradle.kts")
+        testProject = File("src/test/resources/test-project")
+        buildGradleFile = File("src/test/resources/test-project/build.gradle.kts")
+        tempBuildGradleFile = File("src/test/resources/test-project/build.gradle.kts.new")
+        buildGradleFile.copyTo(tempBuildGradleFile)
 
         gradleFileStringBuilder = StringBuilder()
         gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
@@ -28,11 +31,11 @@ class GenerateCocoaPodTaskWithoutFieldsTest {
     @After
     fun cleanUp() {
         buildGradleFile.deleteRecursively()
+        tempBuildGradleFile.renameTo(buildGradleFile)
     }
 
     @Test
     fun `generate cocoa repo return error when gitUrl is not present`() {
-
         val pluginConfig = """
            frameworkBundlerConfig {
                 frameworkName.set("LibraryName")
@@ -42,15 +45,9 @@ class GenerateCocoaPodTaskWithoutFieldsTest {
 
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.writeText(gradleFileStringBuilder.toString())
+        buildGradleFile.appendText(gradleFileStringBuilder.toString())
 
-        val runner = GradleRunner.create()
-            .withProjectDir(testProject)
-            .withPluginClasspath()
-
-        val result = runner
-            .withArguments(GenerateCocoaPodRepositoryTask.NAME, "--stacktrace")
-            .buildAndFail()
+        val result = testProject.buildAndFail(GenerateCocoaPodRepositoryTask.NAME)
 
         assertTrue(result.output.contains(ErrorMessages.VERSION_NAME_NOT_PRESENT_MESSAGE))
     }
