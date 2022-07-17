@@ -1,12 +1,10 @@
 package com.prof18.kmp.framework.bundler.testutils
 
 import com.prof18.kmp.framework.bundler.data.FrameworkType
-import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
 import org.junit.Before
 import java.io.File
 import java.nio.file.Paths
-
 
 abstract class BaseBuildTaskTest(
     private val frameworkType: FrameworkType,
@@ -17,7 +15,7 @@ abstract class BaseBuildTaskTest(
 
     lateinit var testProject: File
     lateinit var testDestFile: File
-    lateinit var runner: GradleRunner
+    var hasToDeleteImport: Boolean = false
 
     @Before
     open fun setup() {
@@ -30,38 +28,20 @@ abstract class BaseBuildTaskTest(
         testDestFile = File("$currentPath/../test-dest")
         testDestFile.mkdirs()
 
-        // todo
-//        if (true) {
-//            val contentLines = buildGradleFile.readLines()
-//
-//            buildGradleFile.outputStream().use {
-//                it.write("".toByteArray())
-//            }
-//
-//            buildGradleFile.appendText("\n")
-//            contentLines
-//                .drop(1)
-//                .filter { it.isNotEmpty() }
-//                .forEach {
-//                    buildGradleFile.appendText(it)
-//                    buildGradleFile.appendText("\n")
-//                }
-//        }
+        if (hasToDeleteImport) {
+            buildGradleFile.deleteXCFrameworkImport()
+        }
 
         buildGradleFile.appendText(getGradleFile())
-
-        runner = GradleRunner.create()
-            .withProjectDir(testProject)
-//            .withPluginClasspath()
     }
 
     @After
-    fun cleanUp() {
+    open fun cleanUp() {
         buildGradleFile.deleteRecursively()
         tempBuildGradleFile.renameTo(buildGradleFile)
         testDestFile.deleteRecursively()
         File("${testProject.path}/build").deleteRecursively()
-        File("${testProject.path}/.gradle").deleteRecursively()
+        hasToDeleteImport = false
     }
 
     private fun getGradleFile(): String = when (frameworkType) {

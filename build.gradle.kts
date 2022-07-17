@@ -61,6 +61,7 @@ tasks.withType<Test> {
     useJUnit()
     dependsOn("publishToMavenLocal")
 
+    systemProperty("defaultKotlinVersion", kotlinVersion)
     systemProperty("kotlinVersion", kotlinVersion)
     systemProperty("pluginVersion", pluginVersion)
 }

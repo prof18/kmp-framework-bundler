@@ -7,8 +7,6 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
-private const val KOTLIN_VERSION = "1.5.0"
-
 const val FRAMEWORK_VERSION_NUMBER = "1.0.0"
 
 const val POD_SPEC_VERSION_NUMBER = "s.version       = \"$FRAMEWORK_VERSION_NUMBER\""
@@ -170,6 +168,23 @@ fun File.buildAndFail(vararg commands: String): BuildResult = GradleRunner.creat
     .forwardOutput()
     .buildAndFail()
 
+fun File.deleteXCFrameworkImport() {
+    val contentLines = this.readLines()
+
+    this.outputStream().use {
+        it.write("".toByteArray())
+    }
+
+    this.appendText("\n")
+    contentLines
+        .drop(1)
+        .filter { it.isNotEmpty() }
+        .forEach {
+            this.appendText(it)
+            this.appendText("\n")
+        }
+}
+
 fun extractKotlinVersion(version: String): KotlinVersion? {
     val split = version
         .substringBefore("-")
@@ -180,6 +195,12 @@ fun extractKotlinVersion(version: String): KotlinVersion? {
     return KotlinVersion(major, minor, patch)
 }
 
-fun getKotlinVersion(): String = System.getProperty("kotlinVersion")
+fun getCurrentKotlinVersion(): String = System.getProperty("kotlinVersion")
+
+fun getDefaultKotlinVersion(): String = System.getProperty("defaultKotlinVersion")
+
+fun resetKotlinVersionToDefault() = System.setProperty("kotlinVersion", getDefaultKotlinVersion())
+
+fun setKotlinVersion(version: String) = System.setProperty("kotlinVersion", version)
 
 fun KotlinVersion.hasDefaultXCFrameworkSupport() = this.isAtLeast(1, 5, 30)
