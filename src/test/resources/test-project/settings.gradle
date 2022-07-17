@@ -1,15 +1,11 @@
 pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id == "kotlin-multiplatform") {
-                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${'$'}{requested.version}")
+    repositories {
+        mavenLocal {
+            content {
+                includeGroup("com.prof18.kmp.framework.bundler") // Only load sample plugins from local Maven
             }
         }
-    }
-
-    repositories {
         mavenCentral()
-        jcenter()
         maven { url 'https://plugins.gradle.org/m2/' }
     }
 }
