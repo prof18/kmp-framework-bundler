@@ -54,8 +54,9 @@ java {
     withSourcesJar()
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnit()
+    dependsOn("publishToMavenLocal") // TODO: use it or not?
 }
 
 tasks.processResources {
