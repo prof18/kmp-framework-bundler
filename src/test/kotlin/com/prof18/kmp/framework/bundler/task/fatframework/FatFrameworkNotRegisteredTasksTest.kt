@@ -5,6 +5,7 @@ import com.prof18.kmp.framework.bundler.task.xcframework.BUILD_RELEASE_XC_FRAMEW
 import com.prof18.kmp.framework.bundler.task.xcframework.PublishDebugXCFrameworkTask
 import com.prof18.kmp.framework.bundler.task.xcframework.PublishReleaseXCFrameworkTask
 import com.prof18.kmp.framework.bundler.testutils.baseFatFrameworkGradleFile
+import com.prof18.kmp.framework.bundler.testutils.buildAndFail
 import junit.framework.TestCase.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
@@ -23,7 +24,6 @@ class FatFrameworkNotRegisteredTasksTest(
     private lateinit var buildGradleFile: File
     private lateinit var tempBuildGradleFile: File
     private lateinit var gradleFileStringBuilder: StringBuilder
-    private lateinit var runner: GradleRunner
 
     @Before
     fun setup() {
@@ -48,10 +48,6 @@ class FatFrameworkNotRegisteredTasksTest(
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
         buildGradleFile.appendText(gradleFileStringBuilder.toString())
-
-        runner = GradleRunner.create()
-            .withProjectDir(testProject)
-            .withPluginClasspath()
     }
 
     @After
@@ -59,14 +55,11 @@ class FatFrameworkNotRegisteredTasksTest(
         buildGradleFile.deleteRecursively()
         tempBuildGradleFile.renameTo(buildGradleFile)
         File("${testProject.path}/build").deleteRecursively()
-        File("${testProject.path}/.gradle").deleteRecursively()
     }
 
     @Test
     fun `When FAT_FRAMEWORK is setup, the fat framework tasks are not present`() {
-        val result = runner
-            .withArguments(taskName)
-            .buildAndFail()
+        val result = testProject.buildAndFail(taskName)
 
         assertTrue(result.output.contains("Task '$taskName' not found in root project"))
     }

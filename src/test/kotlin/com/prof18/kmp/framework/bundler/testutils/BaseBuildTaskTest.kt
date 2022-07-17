@@ -12,9 +12,10 @@ abstract class BaseBuildTaskTest(
     private val frameworkType: FrameworkType,
 ) {
 
-    private lateinit var testProject: File
     private lateinit var buildGradleFile: File
     private lateinit var tempBuildGradleFile: File
+
+    lateinit var testProject: File
     lateinit var testDestFile: File
     lateinit var runner: GradleRunner
 

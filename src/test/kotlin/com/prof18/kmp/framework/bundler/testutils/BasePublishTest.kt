@@ -61,7 +61,6 @@ abstract class BasePublishTest(
         testDestFolder.deleteRecursively()
         remoteDestFolder.deleteRecursively()
         File("${testProject.path}/build").deleteRecursively()
-//        File("${testProject.path}/.gradle").deleteRecursively()
     }
 
     private fun getGradleFile(): String = when (frameworkType) {
