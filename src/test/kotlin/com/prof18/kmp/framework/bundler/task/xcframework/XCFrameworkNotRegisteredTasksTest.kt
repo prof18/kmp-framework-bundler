@@ -5,8 +5,8 @@ import com.prof18.kmp.framework.bundler.task.fatframework.BUILD_RELEASE_FAT_FRAM
 import com.prof18.kmp.framework.bundler.task.fatframework.PublishDebugFatFrameworkTask
 import com.prof18.kmp.framework.bundler.task.fatframework.PublishReleaseFatFrameworkTask
 import com.prof18.kmp.framework.bundler.testutils.baseXCFrameworkGradleFile
+import com.prof18.kmp.framework.bundler.testutils.buildAndFail
 import junit.framework.TestCase.assertTrue
-import org.gradle.testkit.runner.GradleRunner
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -21,6 +21,7 @@ class XCFrameworkNotRegisteredTasksTest(
 
     private lateinit var testProject: File
     private lateinit var buildGradleFile: File
+    private lateinit var tempBuildGradleFile: File
     private lateinit var gradleFileStringBuilder: StringBuilder
 
     @Before
@@ -28,6 +29,8 @@ class XCFrameworkNotRegisteredTasksTest(
         val testProjectName = "test-project"
         testProject = File("src/test/resources/$testProjectName")
         buildGradleFile = File("src/test/resources/$testProjectName/build.gradle.kts")
+        tempBuildGradleFile = File("src/test/resources/test-project/build.gradle.kts.new")
+        buildGradleFile.copyTo(tempBuildGradleFile)
 
         gradleFileStringBuilder = StringBuilder()
     }
@@ -35,8 +38,8 @@ class XCFrameworkNotRegisteredTasksTest(
     @After
     fun cleanUp() {
         buildGradleFile.deleteRecursively()
+        tempBuildGradleFile.renameTo(buildGradleFile)
         File("${testProject.path}/build").deleteRecursively()
-        File("${testProject.path}/.gradle").deleteRecursively()
     }
 
     @Test
@@ -53,15 +56,9 @@ class XCFrameworkNotRegisteredTasksTest(
         gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.writeText(gradleFileStringBuilder.toString())
+        buildGradleFile.appendText(gradleFileStringBuilder.toString())
 
-       val  runner = GradleRunner.create()
-            .withProjectDir(testProject)
-            .withPluginClasspath()
-
-        val result = runner
-            .withArguments(taskName)
-            .buildAndFail()
+        val result = testProject.buildAndFail(taskName)
 
         assertTrue(result.output.contains("Task '$taskName' not found in root project"))
     }
@@ -80,16 +77,9 @@ class XCFrameworkNotRegisteredTasksTest(
         gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
         gradleFileStringBuilder.append("\n")
         gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.writeText(gradleFileStringBuilder.toString())
+        buildGradleFile.appendText(gradleFileStringBuilder.toString())
 
-        val  runner = GradleRunner.create()
-            .withProjectDir(testProject)
-            .withPluginClasspath()
-
-        val result = runner
-            .withArguments(taskName)
-            .buildAndFail()
-
+        val result = testProject.buildAndFail(taskName)
         assertTrue(result.output.contains("Task '$taskName' not found in root project"))
     }
 

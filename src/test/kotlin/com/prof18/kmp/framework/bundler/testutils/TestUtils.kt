@@ -26,17 +26,6 @@ val baseFatFrameworkGradleFile = """
     """.trimIndent()
 
 val baseXCFrameworkGradleFile = """
-        import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-
-        plugins {
-            kotlin("multiplatform") 
-            id("com.prof18.kmp.framework.bundler")
-        }
-
-        repositories {
-            mavenCentral()
-        }
-
         kotlin {
             val xcFramework = XCFramework("LibraryName")
 
