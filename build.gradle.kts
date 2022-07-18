@@ -39,11 +39,17 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
 
     withJavadocJar()
     withSourcesJar()
+}
+
+
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(8)
 }
 
 tasks.withType<Test> {
@@ -61,7 +67,7 @@ tasks.processResources {
 
 gradlePlugin {
     plugins {
-        create("frameworkBundler") {
+        create("KMPFrameworkBundler") {
             id = group
             implementationClass = "com.prof18.kmp.framework.bundler.KMPFrameworkBundlerPlugin"
             version = pluginVersion
@@ -82,7 +88,7 @@ if (localProperties.exists()) {
     ext {
         set("signing.keyId", System.getenv("SIGNING_KEY_ID"))
         set("signing.password", System.getenv("SIGNING_PASSWORD"))
-        set("signing.secretKeyRingFile", System.getenv("SIGNING_SECRET_KEY_RING_FILE"))
+        set("signing.key", System.getenv("SIGNING_KEY"))
         set("ossrhUsername", System.getenv("OSSRH_USERNAME"))
         set("ossrhPassword", System.getenv("OSSRH_PASSWORD"))
     }
@@ -96,9 +102,8 @@ publishing {
                 artifactId = "com.prof18.kmp.framework.bundler.gradle.plugin"
 
                 name.set("KMP Framework Bundler")
-                // TODO: change name
-                description.set("Gradle plugin to distribute a Kotlin Multiplatform iOS library in a FatFramework with CocoaPod")
-                url.set("https://github.com/prof18/kmp-fatframework-cocoa")
+                description.set("Gradle plugin to manage the distribution via CocoaPod of a Kotlin Multiplatform library for Apple platforms with a XCFramework or a FatFramework")
+                url.set("https://github.com/prof18/kmp-framework-bundler")
 
                 licenses {
                     license {
@@ -113,11 +118,9 @@ publishing {
                     }
                 }
                 scm {
-
-                    // TODO: update and change name
-                    connection.set("scm:git:https://github.com/prof18/kmp-fatframework-cocoa")
-                    developerConnection.set("scm:git:ssh://git@github.com/prof18/kmp-fatframework-cocoa.git")
-                    url.set("https://github.com/prof18/kmp-fatframework-cocoa")
+                    connection.set("scm:git:https://github.com/prof18/kmp-framework-bundler")
+                    developerConnection.set("scm:git:ssh://git@github.com/prof18/kmp-framework-bundler.git")
+                    url.set("https://github.com/prof18/kmp-framework-bundler")
                 }
             }
         }
@@ -137,7 +140,12 @@ publishing {
     }
 }
 
-// TODO: enable signing before publishing
-//signing {
-//    sign(publishing.publications["pluginMaven"])
-//}
+signing {
+    useInMemoryPgpKeys(
+        rootProject.ext["signing.keyId"] as? String,
+        rootProject.ext["signing.key"] as? String,
+        rootProject.ext["signing.password"] as? String,
+    )
+
+    sign(publishing.publications["pluginMaven"])
+}
