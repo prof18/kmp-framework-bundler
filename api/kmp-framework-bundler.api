@@ -1,4 +1,4 @@
-public abstract class com/prof18/kmp/framework/bundler/CocoaPodRepoDSL {
+public abstract class com/prof18/kmpframeworkbundler/CocoaPodRepoDSL {
 	public fun <init> ()V
 	public abstract fun getAuthors ()Lorg/gradle/api/provider/Property;
 	public abstract fun getGitUrl ()Lorg/gradle/api/provider/Property;
@@ -7,28 +7,28 @@ public abstract class com/prof18/kmp/framework/bundler/CocoaPodRepoDSL {
 	public abstract fun getSummary ()Lorg/gradle/api/provider/Property;
 }
 
-public abstract class com/prof18/kmp/framework/bundler/KMPFrameworkBundlerExtension {
+public abstract class com/prof18/kmpframeworkbundler/KMPFrameworkBundlerExtension {
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;)V
 	public final fun cocoaPodRepoInfo (Lorg/gradle/api/Action;)V
-	public abstract fun getCocoaPodRepoInfo ()Lcom/prof18/kmp/framework/bundler/CocoaPodRepoDSL;
+	public abstract fun getCocoaPodRepoInfo ()Lcom/prof18/kmpframeworkbundler/CocoaPodRepoDSL;
 	public final fun getFrameworkName ()Lorg/gradle/api/provider/Property;
-	public final fun getFrameworkType ()Lcom/prof18/kmp/framework/bundler/data/FrameworkType;
+	public final fun getFrameworkType ()Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
 	public final fun getOutputPath ()Lorg/gradle/api/provider/Property;
 	public final fun getVersionName ()Lorg/gradle/api/provider/Property;
-	public final fun setFrameworkType (Lcom/prof18/kmp/framework/bundler/data/FrameworkType;)V
+	public final fun setFrameworkType (Lcom/prof18/kmpframeworkbundler/data/FrameworkType;)V
 }
 
-public abstract class com/prof18/kmp/framework/bundler/KMPFrameworkBundlerPlugin : org/gradle/api/Plugin {
+public abstract class com/prof18/kmpframeworkbundler/KMPFrameworkBundlerPlugin : org/gradle/api/Plugin {
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public final class com/prof18/kmp/framework/bundler/data/FrameworkType : java/lang/Enum {
-	public static final field FAT_FRAMEWORK Lcom/prof18/kmp/framework/bundler/data/FrameworkType;
-	public static final field XC_FRAMEWORK Lcom/prof18/kmp/framework/bundler/data/FrameworkType;
-	public static final field XC_FRAMEWORK_LEGACY_BUILD Lcom/prof18/kmp/framework/bundler/data/FrameworkType;
-	public static fun valueOf (Ljava/lang/String;)Lcom/prof18/kmp/framework/bundler/data/FrameworkType;
-	public static fun values ()[Lcom/prof18/kmp/framework/bundler/data/FrameworkType;
+public final class com/prof18/kmpframeworkbundler/data/FrameworkType : java/lang/Enum {
+	public static final field FAT_FRAMEWORK Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
+	public static final field XC_FRAMEWORK Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
+	public static final field XC_FRAMEWORK_LEGACY_BUILD Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
+	public static fun valueOf (Ljava/lang/String;)Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
+	public static fun values ()[Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
 }
 
