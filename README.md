@@ -2,21 +2,112 @@
 
 // TODO this is the old readme
 
-# KMP FatFramework Cocoa
+# KMP Framework Bundler
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.prof18.kmp.fatframework.cocoa/com.prof18.kmp.fatframework.cocoa.gradle.plugin/badge.svg)](https://search.maven.org/artifact/com.prof18.kmp.fatframework.cocoa/com.prof18.kmp.fatframework.cocoa.gradle.plugin/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-**KMP FatFramework Cocoa** is a Gradle plugin for Kotlin Multiplatform projects that generates a **FatFramework** for iOS targets, or a **XCFramework**
-for Apple targets and manages the publishing process in a CocoaPod Repository.
+https://maven-badges.herokuapp.com/maven-central/com.prof18.kmp-framework-bundler/kmp-framework-bundler/badge.svg
 
-## Installation
+**KMP Framework Bundler** is a Gradle plugin for Kotlin Multiplatform projects that generates or a **XCFramework**
+for Apple targets or a **FatFramework** for iOS targets, and manages the publishing process in a CocoaPod Repository.
+
+This plugin is a rewrite of the archived [KMP FatFramework Cocoa](https://github.com/prof18/kmp-fatframework-cocoa)
+
+## Setup
 
 The library is uploaded on MavenCentral, so you can easily add the dependency on the `plugins` block:
 
 ```kotlin
 plugins {
-    id("com.prof18.kmp.fatframework.cocoa") version "<latest-version>"
+    id("com.prof18.kmp-framework-bundler") version "<latest-version>"
+}
+```
+
+You can configure the plugin with the `frameworkBundlerConfig` block in your `build.gradle[.kts]`.
+
+The mandatory fields are the following:
+
+- the name of the Framework
+- the output path
+- the version name
+- the framework type: 
+  - XC_FRAMEWORK
+  - XC_FRAMEWORK_LEGACY_BUILD 
+  - FAT_FRAMEWORK
+
+```kotlin
+frameworkBundlerConfig { 
+  frameworkName.set("LibraryName")
+  outputPath.set("$rootDir/../test-dest")
+  versionName.set("1.0.0")
+  frameworkType = FrameworkType.XC_FRAMEWORK
+}
+```
+
+If the selected `frameworkType` is `XC_FRAMEWORK`, the official Gradle task provided by the Kotlin Team will be used to build the XCFramework. 
+To use the that official task, some setup is required:
+
+```kotlin
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
+plugins {
+    kotlin("multiplatform")
+}
+
+kotlin {
+    val xcf = XCFramework()
+
+    ios {
+        binaries.framework {
+            baseName = "shared"
+            xcf.add(this)
+        }
+    }
+    watchos {
+        binaries.framework {
+            baseName = "shared"
+            xcf.add(this)
+        }
+    }
+    tvos {
+        binaries.framework {
+            baseName = "shared"
+            xcf.add(this)
+        }
+    }
+}
+```
+Additional info are available [in the official doc](https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks).
+
+If the selected `frameworkType` is `XC_FRAMEWORK_LEGACY`, a
+
+This will use a custom task to build the XCFramework. This needs to be used before Kotlin 1.5.30
+
+When using a FatFramework, only iOS targets can be packed together. With XCFramework you can pack together all the Apple families: iOS, macOS, etc.
+
+If you want to run the `generateCocoaPodRepo` task to generate a CocoaPod repository, you have to
+provide the mandatory fields mentioned above and some other parameters in the `cocoaPodRepoInfo` block:
+
+- a summary of the library
+- the homepage of the library
+- the license of the library
+- the authors of the library
+- the url of the git repository that hosts the CocoaPod repo.
+
+```kotlin
+fatFrameworkCocoaConfig {
+    frameworkName = "LibraryName"
+    outputPath = "$rootDir/../test-dest"
+    versionName = "1.0"
+
+    cocoaPodRepoInfo {
+        summary = "This is a test KMP framework"
+        homepage = "https://github.com/prof18/ccoca-repo-test"
+        license = "Apache"
+        authors = "\"Marco Gomiero\" => \"mg@mail.it\""
+        gitUrl = "git@github.com:prof18/ccoca-repo-test.git"
+    }
 }
 ```
 
@@ -80,52 +171,7 @@ The plugin adds five Gradle tasks to your project.
 
   To run this task, the output path provided in the [configuration](#configuration) must be a git repository.
 
-## Configuration
 
-You can configure the plugin with the `fatFrameworkCocoaConfig` block in your `build.gradle[.kts]`.
-
-The mandatory fields are three:
-
-- the name of the FatFramework
-- the output path
-- the version name
-- For XCFramework support, you need to set the `useXCFramework` flag. When the flag is set, only the XCFramework task can be called.
-
-```kotlin
-fatFrameworkCocoaConfig {
-    frameworkName = "LibraryName"
-    outputPath = "$rootDir/../test-dest"
-    versionName = "1.0"
-    useXCFramework = true
-}
-```
-
-When using a FatFramework, only iOS targets can be packed together. With XCFramework you can pack together all the Apple families: iOS, macOS, etc.
-
-If you want to run the `generateCocoaPodRepo` task to generate a CocoaPod repository, you have to
-provide the mandatory fields mentioned above and some other parameters in the `cocoaPodRepoInfo` block:
-
-- a summary of the library
-- the homepage of the library
-- the license of the library
-- the authors of the library
-- the url of the git repository that hosts the CocoaPod repo.
-
-```kotlin
-fatFrameworkCocoaConfig {
-    frameworkName = "LibraryName"
-    outputPath = "$rootDir/../test-dest"
-    versionName = "1.0"
-
-    cocoaPodRepoInfo {
-        summary = "This is a test KMP framework"
-        homepage = "https://github.com/prof18/ccoca-repo-test"
-        license = "Apache"
-        authors = "\"Marco Gomiero\" => \"mg@mail.it\""
-        gitUrl = "git@github.com:prof18/ccoca-repo-test.git"
-    }
-}
-```
 
 ## Changelog
 
