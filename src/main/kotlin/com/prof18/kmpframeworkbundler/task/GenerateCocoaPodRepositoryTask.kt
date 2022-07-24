@@ -21,7 +21,7 @@ internal abstract class GenerateCocoaPodRepositoryTask @Inject constructor(
 
     init {
         group = PLUGIN_TASKS_GROUP
-        description = "Create a CocoaPod repository to distribute the FatFramework"
+        description = "Create a CocoaPod repository to distribute the Framework"
     }
 
     @TaskAction
