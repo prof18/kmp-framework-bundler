@@ -164,7 +164,8 @@ The plugin adds five Gradle tasks to your project. The tasks relative to XCFrame
 
 ## Sample Project
 
-To see the plugin in action, I've published [a little sample project](https://github.com/prof18/kmp-framework-bundler-test-project). This project will publish a FatFramework to: https://github.com/prof18/fat-framework-cocoa-repo-test and an XCFramework to https://github.com/prof18/xcframework-cocoa-repo-test/tree/main. The framework are imported on the [FrameworkTest](https://github.com/prof18/FrameworkTest) iOS project.
+To see the plugin in action, I've published [a little sample project](https://github.com/prof18/kmp-framework-bundler-test-project). This project will publish a FatFramework to: https://github.com/prof18/fat-framework-cocoa-repo-test and an XCFramework to https://github.com/prof18/xcframework-cocoa-repo-test/tree/main. 
+The framework are imported in the [FrameworkTest](https://github.com/prof18/FrameworkTest) iOS project.
 
 ## Migration from KMP FatFramework Cocoa
 
