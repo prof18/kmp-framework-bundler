@@ -138,8 +138,8 @@ The plugin adds five Gradle tasks to your project. The tasks relative to XCFrame
   ```ruby
   pod '<your-library-name>', :git => "git@github.com:<git-username>/<repo-name>.git", :branch => 'develop'
   ```
-  To run this task, the `outputPath` provided in the `frameworkBundlerConfig` block must be a git repository.
-
+  
+   To run this task, the `outputPath` provided in the `frameworkBundlerConfig` block must point to an existing local git repository (for example, the path `"$rootDir/../test-dest"` in the sample above, is a git repository), already initialized as a CocoaPod repo, with a .podspec file. If this is not the case, you can use the `generateCocoaPodRepo` task to generate one.
 
 - `publishReleaseIosFatFramework` that publishes the `Release` version of the **FatFramework** in the CocoaPod repository.
 
@@ -160,7 +160,7 @@ The plugin adds five Gradle tasks to your project. The tasks relative to XCFrame
   pod '<your-library-name>', :git => "git@github.com:<git-username>/<repo-name>.git", :tag => '<version-number>'
   ```
 
-   To run this task, the `outputPath` provided in the `frameworkBundlerConfig` block must be a git repository.
+  To run this task, the `outputPath` provided in the `frameworkBundlerConfig` block must point to an existing local git repository (for example, the path `"$rootDir/../test-dest"` in the sample above, is a git repository), already initialized as a CocoaPod repo, with a .podspec file. If this is not the case, you can use the `generateCocoaPodRepo` task to generate one.
 
 ## Sample Project
 
