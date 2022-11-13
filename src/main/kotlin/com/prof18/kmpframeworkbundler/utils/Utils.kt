@@ -21,7 +21,7 @@ internal fun Project.executeBashCommand(showOutput: Boolean = true, workingDirPa
         }
         val output = outputStream.toString()
         if (showOutput) {
-            print(output)
+            logger.lifecycle(output)
         }
         return@use output
     }
@@ -36,7 +36,7 @@ internal fun Project.executeBashCommand(showOutput: Boolean = true, workingDirFi
         }
         val output = outputStream.toString()
         if (showOutput) {
-            print(output)
+            logger.lifecycle(output)
         }
         return@use output
     }
@@ -49,8 +49,7 @@ internal fun Project.execBashCommandInRepoAndThrowExecException(commandList: Lis
             commandList = commandList
         )
     } catch (e: ExecException) {
-        println(e)
-        e.printStackTrace()
+        logger.lifecycle("Unable to execute bash command", e)
         throw  ExecException(exceptionMessage)
     }
 }
@@ -77,8 +76,6 @@ internal fun Project.retrieveMainBranchName(outputPath: String): String {
         if (checkMainOutput.contains("main")) {
             branchName = "main"
         }
-
-        println(branchName)
 
         if (branchName.isEmpty()) {
             val checkMasterOutput = executeBashCommand(
