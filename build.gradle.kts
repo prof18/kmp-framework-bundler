@@ -16,8 +16,6 @@ plugins {
 apply(plugin = "binary-compatibility-validator")
 apply(plugin = "com.vanniktech.maven.publish")
 
-
-val kotlinVersion: String by project
 val VERSION_NAME: String by project
 
 val group = "com.prof18.kmp-framework-bundler"
@@ -29,10 +27,10 @@ repositories {
 dependencies {
     compileOnly(gradleApi())
 
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlinVersion")
+    compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.kotlin.compiler.embeddable)
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
 }
 
 java {
@@ -50,6 +48,7 @@ tasks.withType<Test> {
     useJUnit()
     dependsOn("publishToMavenLocal")
 
+    val kotlinVersion = libs.versions.kotlin.get()
     systemProperty("defaultKotlinVersion", kotlinVersion)
     systemProperty("kotlinVersion", kotlinVersion)
     systemProperty("pluginVersion", VERSION_NAME)
