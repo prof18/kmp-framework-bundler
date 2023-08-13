@@ -1,20 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:0.10.0")
-        classpath("com.vanniktech:gradle-maven-publish-plugin:0.25.3")
-    }
-}
-
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
+    alias(libs.plugins.com.vanniktech.maven.publish)
+    alias(libs.plugins.binary.compatibility.validator)
 }
-
-apply(plugin = "binary-compatibility-validator")
-apply(plugin = "com.vanniktech.maven.publish")
 
 val VERSION_NAME: String by project
 
@@ -49,7 +38,6 @@ tasks.withType<Test> {
     dependsOn("publishToMavenLocal")
 
     val kotlinVersion = libs.versions.kotlin.get()
-    systemProperty("defaultKotlinVersion", kotlinVersion)
     systemProperty("kotlinVersion", kotlinVersion)
     systemProperty("pluginVersion", VERSION_NAME)
 }

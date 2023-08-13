@@ -15,7 +15,6 @@ abstract class BaseBuildTaskTest(
 
     lateinit var testProject: File
     lateinit var testDestFile: File
-    var hasToDeleteImport: Boolean = false
 
     @Before
     open fun setup() {
@@ -28,10 +27,6 @@ abstract class BaseBuildTaskTest(
         testDestFile = File("$currentPath/../test-dest")
         testDestFile.mkdirs()
 
-        if (hasToDeleteImport) {
-            buildGradleFile.deleteXCFrameworkImport()
-        }
-
         buildGradleFile.appendText(getGradleFile())
     }
 
@@ -41,7 +36,6 @@ abstract class BaseBuildTaskTest(
         tempBuildGradleFile.renameTo(buildGradleFile)
         testDestFile.deleteRecursively()
         File("${testProject.path}/build").deleteRecursively()
-        hasToDeleteImport = false
     }
 
     private fun getGradleFile(): String = when (frameworkType) {
