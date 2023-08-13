@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:0.10.0")
+        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:0.13.2")
         classpath("com.vanniktech:gradle-maven-publish-plugin:0.25.3")
     }
 }
