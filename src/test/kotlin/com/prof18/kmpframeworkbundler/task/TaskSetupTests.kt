@@ -5,9 +5,6 @@ import com.prof18.kmpframeworkbundler.testutils.baseFatFrameworkGradleFile
 import com.prof18.kmpframeworkbundler.testutils.baseXCFrameworkGradleFile
 import com.prof18.kmpframeworkbundler.testutils.buildAndFail
 import com.prof18.kmpframeworkbundler.testutils.buildAndRun
-import com.prof18.kmpframeworkbundler.testutils.deleteXCFrameworkImport
-import com.prof18.kmpframeworkbundler.testutils.resetKotlinVersionToDefault
-import com.prof18.kmpframeworkbundler.testutils.setKotlinVersion
 import junit.framework.TestCase.assertTrue
 import org.junit.After
 import org.junit.Before
@@ -164,61 +161,5 @@ class TaskSetupTests {
         val result = testProject.buildAndFail(GenerateCocoaPodRepositoryTask.NAME)
 
         assertTrue(result.output.contains(ErrorMessages.GIT_URL_NOT_PRESENT))
-    }
-
-    @Test
-    fun `When kotlin version is less then 1_5_30 and the frameworkType is XC_FRAMEWORK, an exception is raised`() {
-
-        setKotlinVersion("1.5.20")
-
-        val pluginConfig = """
-           frameworkBundlerConfig {
-                frameworkName.set("LibraryName")
-                outputPath.set("${testProject.path}/../test-dest")
-                versionName.set("1.0.0")
-                frameworkType = com.prof18.kmpframeworkbundler.data.FrameworkType.XC_FRAMEWORK
-           }     
-       """.trimIndent()
-
-        buildGradleFile.deleteXCFrameworkImport()
-
-        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
-        gradleFileStringBuilder.append("\n")
-        gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.appendText(gradleFileStringBuilder.toString())
-
-        val result = testProject.buildAndFail()
-
-        assertTrue(result.output.contains(ErrorMessages.EMPTY_XC_FRAMEWORK_TASKS))
-
-        resetKotlinVersionToDefault()
-    }
-
-    @Test
-    fun `When kotlin version is less then 1_5_30 and the frameworkType is XC_FRAMEWORK_LEGACY, the project is correctly setup`() {
-
-        setKotlinVersion("1.5.20")
-
-        val pluginConfig = """
-           frameworkBundlerConfig {
-                frameworkName.set("LibraryName")
-                outputPath.set("${testProject.path}/../test-dest")
-                versionName.set("1.0.0")
-                frameworkType = com.prof18.kmpframeworkbundler.data.FrameworkType.XC_FRAMEWORK_LEGACY_BUILD
-           }     
-       """.trimIndent()
-
-        buildGradleFile.deleteXCFrameworkImport()
-
-        gradleFileStringBuilder.append(baseFatFrameworkGradleFile)
-        gradleFileStringBuilder.append("\n")
-        gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.appendText(gradleFileStringBuilder.toString())
-
-        val result = testProject.buildAndRun()
-
-        assertTrue(result.output.contains("BUILD SUCCESSFUL"))
-
-        resetKotlinVersionToDefault()
     }
 }

@@ -11,6 +11,14 @@ enum class FrameworkType {
      *
      * See [com.prof18.kmpframeworkbundler.task.xcframework.legacy.buildXCFramework]
      */
+    @Deprecated(
+        message = "Please use FrameworkType.XC_FRAMEWORK, that will trigger the official Gradle task. " +
+                "This entry will be removed in a future library version",
+        replaceWith = ReplaceWith(
+            expression = "FrameworkType.XC_FRAMEWORK",
+            "com.prof18.kmpframeworkbundler.data.XC_FRAMEWORK"
+        )
+    )
     XC_FRAMEWORK_LEGACY_BUILD,
 
     /**
