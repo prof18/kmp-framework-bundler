@@ -1,5 +1,5 @@
 [versions]
-kotlin="1.9.0"
+kotlin="1.9.10"
 junit="4.13.2"
 com-vanniktech-maven-publish="0.25.3"
 binary-compatibility-validator = "0.13.2"
