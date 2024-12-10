@@ -27,7 +27,6 @@ public abstract class com/prof18/kmpframeworkbundler/KMPFrameworkBundlerPlugin :
 public final class com/prof18/kmpframeworkbundler/data/FrameworkType : java/lang/Enum {
 	public static final field FAT_FRAMEWORK Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
 	public static final field XC_FRAMEWORK Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
-	public static final field XC_FRAMEWORK_LEGACY_BUILD Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
 	public static fun values ()[Lcom/prof18/kmpframeworkbundler/data/FrameworkType;
 }
