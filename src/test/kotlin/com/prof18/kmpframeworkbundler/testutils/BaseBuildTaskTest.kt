@@ -40,7 +40,6 @@ abstract class BaseBuildTaskTest(
 
     private fun getGradleFile(): String = when (frameworkType) {
         FrameworkType.FAT_FRAMEWORK -> fatFrameworkGradleFile
-        FrameworkType.XC_FRAMEWORK_LEGACY_BUILD -> legacyXCFrameworkGradleFile
         FrameworkType.XC_FRAMEWORK -> xcFrameworkGradleFile
     }
 }

@@ -63,26 +63,6 @@ class XCFrameworkNotRegisteredTasksTest(
         assertTrue(result.output.contains("Task '$taskName' not found in root project"))
     }
 
-    @Test
-    fun `When XC_FRAMEWORK_LEGACY_BUILD is setup, the fat framework tasks are not present`() {
-        val pluginConfig = """
-           frameworkBundlerConfig {
-                frameworkName.set("LibraryName")
-                outputPath.set("${testProject.path}/../test-dest")
-                versionName.set("1.0.0")
-                frameworkType = com.prof18.kmpframeworkbundler.data.FrameworkType.XC_FRAMEWORK_LEGACY_BUILD
-           }     
-       """.trimIndent()
-
-        gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
-        gradleFileStringBuilder.append("\n")
-        gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.appendText(gradleFileStringBuilder.toString())
-
-        val result = testProject.buildAndFail(taskName)
-        assertTrue(result.output.contains("Task '$taskName' not found in root project"))
-    }
-
     companion object {
         @JvmStatic
         @Parameterized.Parameters

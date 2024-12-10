@@ -27,7 +27,6 @@ The required fields are the following:
 - the version name
 - the framework type: 
   - XC_FRAMEWORK
-  - XC_FRAMEWORK_LEGACY_BUILD 
   - FAT_FRAMEWORK
 
 ```kotlin
@@ -73,7 +72,7 @@ kotlin {
 ```
 Additional information is available [in the official Kotlin doc](https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks).
 
-If the selected `frameworkType` is `XC_FRAMEWORK_LEGACY_BUILD`, a custom task will be used to build the XCFramework. This is required before Kotlin 1.5.30. 
+If the selected `frameworkType` is `XC_FRAMEWORK_LEGACY_BUILD`, a custom task will be used to build the XCFramework. This is required before Kotlin 1.5.30 and it has been deleted from version 0.0.12 of the plugin. 
 
 If the selected `frameworkType` is `FAT_FRAMEWORK`, then a FatFramework will be built. When using a FatFramework, only iOS targets can be packed together. With XCFramework you can pack together all the Apple families: iOS, macOS, etc.
 

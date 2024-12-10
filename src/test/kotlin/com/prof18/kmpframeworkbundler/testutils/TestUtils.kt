@@ -13,43 +13,45 @@ const val POD_SPEC_VERSION_NUMBER = "s.version       = \"$FRAMEWORK_VERSION_NUMB
 
 val baseFatFrameworkGradleFile = """
         kotlin {
-            ios() {
-                binaries.framework("FrameworkName")
-            }
-            sourceSets {
-                val commonMain by getting
-                val iosMain by getting
-            }
+            listOf(
+                iosX64(),
+                iosArm64(),
+            ).forEach {
+                it.binaries.framework {
+                    baseName = "FrameworkName"
+                }
+            }            
         }
     """.trimIndent()
 
 val baseXCFrameworkGradleFile = """
         kotlin {
             val xcFramework = XCFramework("LibraryName")
-
-            ios() {
-                binaries.framework("LibraryName") {
+            
+            listOf(
+                iosX64(),
+                iosArm64(),
+                iosSimulatorArm64()
+            ).forEach {
+                it.binaries.framework {
+                    baseName = "LibraryName"
                     xcFramework.add(this)
                 }
-            }
-            sourceSets {
-                val commonMain by getting
-                val iosMain by getting
-            }
+            }  
         }
     """.trimIndent()
 
 val fatFrameworkGradleFile = """
         kotlin {
-            ios() {
-                binaries.framework("FrameworkName")
-            }
-            sourceSets {
-                val commonMain by getting
-                val iosMain by getting
-            }
+            listOf(
+                iosX64(),
+                iosArm64(),
+            ).forEach {
+                it.binaries.framework {
+                    baseName = "FrameworkName"
+                }
+            }              
         }
-        
         
        frameworkBundlerConfig {
             frameworkName.set("LibraryName")
@@ -62,16 +64,17 @@ val fatFrameworkGradleFile = """
 val xcFrameworkGradleFile = """        
         kotlin {
             val xcFramework = XCFramework("LibraryName")
-
-            ios() {
-                binaries.framework("LibraryName") {
+            
+            listOf(
+                iosX64(),
+                iosArm64(),
+                iosSimulatorArm64()
+            ).forEach {
+                it.binaries.framework {
+                    baseName = "LibraryName"
                     xcFramework.add(this)
                 }
-            }
-            sourceSets {
-                val commonMain by getting
-                val iosMain by getting
-            }
+            }             
         }
         
        frameworkBundlerConfig {
@@ -82,24 +85,6 @@ val xcFrameworkGradleFile = """
        }  
     """.trimIndent()
 
-val legacyXCFrameworkGradleFile = """
-        kotlin {
-            ios() {
-                binaries.framework("LibraryName") 
-            }
-            sourceSets {
-                val commonMain by getting
-                val iosMain by getting
-            }
-        }
-        
-       frameworkBundlerConfig {
-            frameworkName.set("LibraryName")
-            outputPath.set("${'$'}rootDir/../../../../../test-dest")
-            versionName.set("$FRAMEWORK_VERSION_NUMBER")
-            frameworkType = com.prof18.kmpframeworkbundler.data.FrameworkType.XC_FRAMEWORK_LEGACY_BUILD
-       }  
-    """.trimIndent()
 
 val fatFrameworkPodSpec = """
     Pod::Spec.new do |s|

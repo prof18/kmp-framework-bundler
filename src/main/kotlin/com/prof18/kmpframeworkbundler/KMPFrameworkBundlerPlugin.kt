@@ -11,8 +11,6 @@ import com.prof18.kmpframeworkbundler.task.fatframework.registerBuildReleaseFatF
 import com.prof18.kmpframeworkbundler.task.fatframework.registerPublishDebugFatFrameworkTask
 import com.prof18.kmpframeworkbundler.task.fatframework.registerPublishReleaseFatFrameworkTask
 import com.prof18.kmpframeworkbundler.task.registerGenerateCocoaPodRepositoryTask
-import com.prof18.kmpframeworkbundler.task.xcframework.legacy.registerBuildLegacyDebugXCFrameworkTask
-import com.prof18.kmpframeworkbundler.task.xcframework.legacy.registerBuildLegacyReleaseXCFrameworkTask
 import com.prof18.kmpframeworkbundler.task.xcframework.registerBuildDebugXCFrameworkTask
 import com.prof18.kmpframeworkbundler.task.xcframework.registerBuildReleaseXCFrameworkTask
 import com.prof18.kmpframeworkbundler.task.xcframework.registerPublishDebugXCFrameworkTask
@@ -51,10 +49,6 @@ abstract class KMPFrameworkBundlerPlugin : Plugin<Project> {
 
             if (extension.frameworkType == FrameworkType.XC_FRAMEWORK && xcFrameworkTasks.isEmpty()) {
                 throw InvalidUserDataException(ErrorMessages.EMPTY_XC_FRAMEWORK_TASKS)
-            }
-
-            if (extension.frameworkType == FrameworkType.XC_FRAMEWORK_LEGACY_BUILD && xcFrameworkTasks.isNotEmpty()) {
-                logger.lifecycle(ErrorMessages.USING_LEGACY_BUILD_SYSTEM)
             }
 
             project.extensions.findByType<KotlinMultiplatformExtension>()
@@ -114,15 +108,6 @@ abstract class KMPFrameworkBundlerPlugin : Plugin<Project> {
                             // Release
                             project.registerPublishDebugFatFrameworkTask(config)
                             project.registerPublishReleaseFatFrameworkTask(config)
-                        }
-                        FrameworkType.XC_FRAMEWORK_LEGACY_BUILD -> {
-                            // Build
-                            project.registerBuildLegacyDebugXCFrameworkTask(config)
-                            project.registerBuildLegacyReleaseXCFrameworkTask(config)
-
-                            // Release
-                            project.registerPublishDebugXCFrameworkTask(config)
-                            project.registerPublishReleaseXCFrameworkTask(config)
                         }
                         FrameworkType.XC_FRAMEWORK -> {
                             // Build

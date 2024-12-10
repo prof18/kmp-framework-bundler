@@ -94,27 +94,6 @@ class TaskSetupTests {
     }
 
     @Test
-    fun `When an XCFramework is setup and the frameworkType is XC_FRAMEWORK_LEGACY_BUILD, a message is logged`() {
-        val pluginConfig = """
-           frameworkBundlerConfig {
-                frameworkName.set("LibraryName")
-                outputPath.set("${testProject.path}/../test-dest")
-                versionName.set("1.0.0")
-                frameworkType = com.prof18.kmpframeworkbundler.data.FrameworkType.XC_FRAMEWORK_LEGACY_BUILD
-           }     
-       """.trimIndent()
-
-        gradleFileStringBuilder.append(baseXCFrameworkGradleFile)
-        gradleFileStringBuilder.append("\n")
-        gradleFileStringBuilder.append(pluginConfig)
-        buildGradleFile.appendText(gradleFileStringBuilder.toString())
-
-        val result = testProject.buildAndRun()
-
-        assertTrue(result.output.contains(ErrorMessages.USING_LEGACY_BUILD_SYSTEM))
-    }
-
-    @Test
     fun `When an XCFramework is not setup and the frameworkType is XC_FRAMEWORK, an exception is raised`() {
         val pluginConfig = """
            frameworkBundlerConfig {
