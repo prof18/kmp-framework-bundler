@@ -2,7 +2,7 @@
 kotlin="2.1.10"
 junit="4.13.2"
 com-vanniktech-maven-publish="0.25.3"
-binary-compatibility-validator = "0.16.3"
+binary-compatibility-validator = "0.17.0"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
