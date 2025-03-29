@@ -1,7 +1,7 @@
 [versions]
 kotlin="2.1.20"
 junit="4.13.2"
-com-vanniktech-maven-publish="0.30.0"
+com-vanniktech-maven-publish="0.31.0"
 binary-compatibility-validator = "0.17.0"
 
 [libraries]
